@@ -1,7 +1,5 @@
 ![natrix](natrixBanner.svg "The Natrix Banner")
-
-#natrix
-
+# natrix
 python3 library to handle EventStream file format
 
 
