@@ -5,7 +5,7 @@ from .config      import VERSION,TYPE
 
 Generictype=[('data',np.int), ('ts', np.uint64)];
 
-class GenericStream(Stream):
+class GenericStream(EventStream):
     """
     """
     def __init__(self, _events, _version=VERSION):

@@ -6,7 +6,7 @@ from .config      import VERSION,TYPE
 
 ATIStype=[('x',np.uint16), ('y', np.uint16), ('p', np.bool_),('isTc', np.bool_), ('ts', np.uint64)];
 
-class ATISStream(Stream):
+class ATISStream(EventStream):
     """
     """
     def __init__(self, _width, _height, _events, _version=VERSION):
@@ -44,7 +44,7 @@ class ATISStream(Stream):
                 if numberOfOverflowsLeft > 0 : 
                     to_write.append( 0xfc | uint8(numberOfOverflowsLeft));
                 relativeTs -= numberOfOverflows * 64;
-            to_write.append(np.uint8( (relativeTs << 2) & 0xfc) | (datum.p << 1) | (datum.isTc) ));
+            to_write.append(np.uint8( (relativeTs << 2) & 0xfc) | (datum.p << 1) | (datum.isTc) );
             to_write.append(np.uint8( datum.x ));
             to_write.append(np.uint8( datum.x >> 8));
             to_write.append(np.uint8( datum.y ));

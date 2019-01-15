@@ -2,11 +2,11 @@
 import numpy as np
 import os
 from .EventStream import EventStream
-from .config      import VERSION, TYPE
+from .config import VERSION, TYPE
 
 AMDtype=[('x',np.uint8), ('y', np.uint8), ('s', np.uint8), ('int', np.uint8), ('ts', np.uint64)]
 
-class AMDStream(Stream):
+class AMDStream(EventStream):
     """
     """
     def __init__(self, _events, _version=VERSION):

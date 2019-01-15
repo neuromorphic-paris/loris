@@ -1,10 +1,10 @@
-from .config        import VERSION
-from .Stream        import Stream
+from .config import VERSION
+from .EventStream import EventStream
 from .GenericStream import GenericStream
-from .DVSStream     import DVSStream
-from .ATISStream    import ATISStream
-from .AMDStream     import AMDStream
-from .ColorStream   import ColorStream
-from .readStream    import readStream
+from .DVSStream import DVSStream
+from .ATISStream import ATISStream
+from .AMDStream import AMDStream
+from .ColorStream import ColorStream
+from .readStream import readStream
 
-__all__ = ['GenericStreameStream','DVSStream','ATISStream','AMDStream','ColorStream','readStream', 'VERSION'];
+__all__ = ['GenericStream', 'DVSStream', 'ATISStream', 'AMDStream', 'ColorStream', 'readStream', 'VERSION'];

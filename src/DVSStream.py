@@ -2,11 +2,11 @@
 import numpy as np
 import os
 from .EventStream import EventStream
-from .config      import VERSION,TYPE
+from .config import VERSION,TYPE
 
 DVStype=[('x',np.uint16), ('y', np.uint16), ('isIncrease', np.bool_), ('timestamp', np.uint64)];
 
-class DVSStream(Stream):
+class DVSStream(EventStream):
     """
     """
     def __init__(self, _width, _height, _events, _version=VERSION):

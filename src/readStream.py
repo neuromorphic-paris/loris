@@ -2,16 +2,16 @@ import numpy as np
 from .DVSStream     import DVSStream;
 from .ATISStream    import ATISStream,ATIStype;
 from .AMDStream     import AMDStream;
-from .oneDStream    import oneDStream;
+#from .oneDStream    import oneDStream;
 from .ColorStream   import ColorStream;
 from .GenericStream import GenericStream;
-from .LiquidStream  import LiquidStream;
-from .tools         import FormatError;
+#from .LiquidStream  import LiquidStream;
+#from .tools         import FormatError;
 
 def readStream(filename):
-    ESfile = open(filename,'rb');
-    ESdata = ESfile.read();
-    ESfile.close();
+    ESfile = open(filename,'rb')
+    ESdata = ESfile.read()
+    ESfile.close()
     if ESdata[0:12] != b'Event Stream':
         print(" This is not an EventStream file, returning null");
         return None;
