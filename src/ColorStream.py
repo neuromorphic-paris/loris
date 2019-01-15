@@ -4,7 +4,8 @@ import os
 from .EventStream import EventStream
 from .config import VERSION, TYPE
 
-Colortype=[('x',np.uint16), ('y', np.uint8), ('r', np.uint8), ('g', np.uint8), ('b', np.uint8), ('ts', np.uint64)]
+Colortype = [('x', np.uint16), ('y', np.uint8), ('r', np.uint8), ('g', np.uint8), ('b', np.uint8), ('ts', np.uint64)]
+
 
 class ColorStream(EventStream):
     """
@@ -50,6 +51,6 @@ class ColorStream(EventStream):
             to_write.append(np.uint8(datum.g))
             to_write.append(np.uint8(datum.b))
             previousTs = datum.ts
-        S_file = open(filename, 'wb')
+        ES_file = open(filename, 'wb')
         ES_file.write(to_write)
         ES_file.close()
