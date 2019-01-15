@@ -1,28 +1,30 @@
+
 ![natrix](natrixBanner.svg "The Natrix Banner")
 # natrix
-python3 library to handle EventStream file format
+python3 library to handle [EventStream](https://github.com/neuromorphic-paris/event_stream) files
 
-
- !Warning: writing a generic stream is not implemented yet
-
-Dependencies:
+### Install
+Currently only locally. Soon to be released via PyPi.
+#### Dependencies
  - numpy
 
-To read an es file, use
+### Use
+To read an .es file, use
 
-~~~
+~~~python
 import natrix;
 stream = natrix.readsteam("filename");
 ~~~
 
-The function return a class containing a recordarray of the data
+The function returns an object containing an array of event data, which can in turn be accessed by calling ``stream.data``
+Each field can be accessed using its name as ``stream.data.<fieldname>`` which returns again an array.
 
-The array can be access using stream.data
-Each field can be accessed using its name as stream.data.<fieldname> which return an array
-Similarly this method can be used on each record of stream.data
-
-For instances with the timestamp (ts):
-~~~
+As an example to loop over all events:
+~~~python
 for datum in stream data:
     print (data.ts);
 ~~~
+
+Please use Pylint before creating a Pull Request. [PEP 8 Python Style](https://www.python.org/dev/peps/pep-0008/) preferred. 
+
+Caveat: writing a generic event stream is not implemented yet
