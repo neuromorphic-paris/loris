@@ -1,12 +1,10 @@
-
 import numpy as np
-import os
 from .config import VERSION
 
 
-class Stream(object):
+class EventStream(object):
     """
-    Base Class for a Stream 
+    Base Class for an event stream 
     """
     def __init__(self, _events, _dtype, _version=VERSION):
         self.data       = np.rec.array(_events,dtype = _dtype);
