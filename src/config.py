@@ -5,7 +5,6 @@ TYPE = {
         'ATIS': 2,
         'AMD': 3,
         'Color': 4,
-        'Liquid': 5,
         }
 
-REVTYPE = ['Generic', 'DVS', 'ATIS', 'AMD', 'Color', 'Liquid']
+REVTYPE = ['Generic', 'DVS', 'ATIS', 'AMD', 'Color']
