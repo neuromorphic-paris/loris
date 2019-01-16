@@ -12,8 +12,8 @@ Currently only locally. Soon to be released via PyPi.
 To read an .es file, use
 
 ~~~python
-import natrix;
-stream = natrix.readsteam("filename");
+import natrix
+stream = natrix.readsteam("filename")
 ~~~
 
 The function returns an object containing an array of event data, which can in turn be accessed by calling ``stream.data``
@@ -22,7 +22,7 @@ Each field can be accessed using its name as ``stream.data.<fieldname>`` which r
 As an example to loop over all events:
 ~~~python
 for datum in stream data:
-    print (data.ts);
+    print (data.ts)
 ~~~
 
 Please use Pylint before creating a Pull Request. [PEP 8 Python Style](https://www.python.org/dev/peps/pep-0008/) preferred. 
