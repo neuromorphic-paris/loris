@@ -52,7 +52,7 @@ class DVSStream(EventStream):
         if not os.path.exists(os.path.dirname(filename)):
             try:
                 os.makedirs(os.path.dirname(filename))
-            except OSError as exc: # Guard against race condition
+            except OSError as exc:  # Guard against race condition
                 if exc.errno != errno.EEXIST:
                     raise
         to_write = bytearray('Event Stream', 'ascii')
@@ -67,17 +67,18 @@ class DVSStream(EventStream):
         previous_ts = 0
         for datum in self.data:
             relative_ts = datum.ts - previous_ts
-            if relative_ts > 127:
-                numberOfOverflows = int(relative_ts / 127)
-                for i in range(numberOfOverflows):
+            if relative_ts >= 127:
+                number_of_overflows = int(relative_ts / 127)
+                for i in range(number_of_overflows):
                     to_write.append(0xff)
-                relative_ts -= numberOfOverflows * 127
-            to_write.append(np.uint8((np.uint8(relative_ts) << 1) | (datum.is_increase & 0x01)))
+                relative_ts -= number_of_overflows * 127
+            to_write.append(np.uint8((np.uint8(relative_ts) << 1)
+                            | (datum.is_increase & 0x01)))
             to_write.append(np.uint8(datum.x))
             to_write.append(np.uint8(datum.x >> 8))
             to_write.append(np.uint8(datum.y))
             to_write.append(np.uint8(datum.y >> 8))
             previous_ts = datum.ts
-        ES_file = open(filename, 'wb')
-        ES_file.write(to_write)
-        ES_file.close()
+        file = open(filename, 'wb')
+        file.write(to_write)
+        file.close()

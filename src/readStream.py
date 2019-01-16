@@ -1,6 +1,5 @@
-import numpy as np
 from .DVSStream import DVSStream;
-from .ATISStream import ATISStream,ATIStype;
+from .ATISStream import ATISStream;
 from .AMDStream import AMDStream;
 from .ColorStream import ColorStream;
 from .GenericStream import GenericStream;
@@ -28,14 +27,14 @@ def readStream(filename):
     print("reading EventStream file version " + stream_version + ", type " + str(stream_type))
 
     if stream_type is 0:
-        return GenericStream.read(event_data)
+        return GenericStream.read(event_data, stream_version)
     elif stream_type is 1:
         return DVSStream.read(event_data, stream_version)
     elif stream_type is 2:
-        return ATISStream.read(event_data)
+        return ATISStream.read(event_data, stream_version)
     elif stream_type is 3:
-        return AMDStream.read(event_data)
+        return AMDStream.read(event_data, stream_version)
     elif stream_type is 4:
-        return ColorStream.read(event_data)
+        return ColorStream.read(event_data, stream_version)
     else:
         return None

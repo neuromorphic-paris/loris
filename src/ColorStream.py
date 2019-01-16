@@ -4,7 +4,8 @@ import os
 from .EventStream import EventStream
 from .config import VERSION, TYPE
 
-Colortype = [('x', np.uint16), ('y', np.uint8), ('r', np.uint8), ('g', np.uint8), ('b', np.uint8), ('ts', np.uint64)]
+Colortype = [('x', np.uint16), ('y', np.uint8), ('r', np.uint8),
+             ('g', np.uint8), ('b', np.uint8), ('ts', np.uint64)]
 
 
 class ColorStream(EventStream):
@@ -15,36 +16,35 @@ class ColorStream(EventStream):
         self.width = np.uint16(_width)
         self.height = np.uint16(_height)
 
-    def readColorStream(event_data):
-        width = event_data[17] << 8 + event_data[16]
-        height = event_data[19] << 8 + event_data[18]
-        f_cursor = 20
+    def readColorStream(event_data, version):
+        width = (event_data[17] << 8) + event_data[16]
+        height = (event_data[19] << 8) + event_data[18]
+        file_cursor = 20
         end = len(event_data)
         events = []
         currentTime = 0
-        while(f_cursor < end):
-            byte = event_data[f_cursor]
+        while(file_cursor < end):
+            byte = event_data[file_cursor]
             if byte & 0xfe == 0xfe:
                 if byte == 0xfe:  # Reset event
                     pass
                 else:  # Overflow event
                     currentTime += 0xfe
-
             else:
-                f_cursor += 1
-                byte1 = ESdate[f_cursor]
-                f_cursor += 1
-                byte2 = ESfile[f_cursor]
-                f_cursor += 1
-                byte3 = ESfile[f_cursor]
-                f_cursor += 1
-                byte4 = ESfile[f_cursor]
-                f_cursor += 1
-                byte5 = ESfile[f_cursor]
-                f_cursor += 1
-                byte6 = ESfile[f_cursor]
-                f_cursor += 1
-                byte7 = ESfile[f_cursor]
+                file_cursor += 1
+                byte1 = event_data[file_cursor]
+                file_cursor += 1
+                byte2 = event_data[file_cursor]
+                file_cursor += 1
+                byte3 = event_data[file_cursor]
+                file_cursor += 1
+                byte4 = event_data[file_cursor]
+                file_cursor += 1
+                byte5 = event_data[file_cursor]
+                file_cursor += 1
+                byte6 = event_data[file_cursor]
+                file_cursor += 1
+                byte7 = event_data[file_cursor]
                 currentTime += byte
                 x = (byte2 << 8 | byte1)
                 y = (byte4 << 8 | byte3)
@@ -52,7 +52,7 @@ class ColorStream(EventStream):
                 g = byte6
                 b = byte7
                 events.append((x, y, r, g, b, currentTime))
-            f_cursor += 1
+            file_cursor += 1
         return ColorStream(width, height, events, version)
 
     def write(self, filename):
@@ -64,7 +64,6 @@ class ColorStream(EventStream):
             except OSError as exc:  # Guard against race condition
                 if exc.errno != errno.EEXIST:
                     raise
-
         to_write = bytearray('Event Stream', 'ascii')
         to_write.append(self.version.split('.')[0])
         to_write.append(self.version.split('.')[1])
@@ -77,7 +76,7 @@ class ColorStream(EventStream):
         previousTs = 0
         for datum in self.data:
             relativeTs = datum.ts - previousTs
-            if relativeTs > 254:
+            if relativeTs >= 254:
                 numberOfOverflows = int(relativeTs / 255)
                 for i in range(numberOfOverflows):
                     to_write.append(0xff)
