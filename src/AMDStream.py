@@ -13,6 +13,34 @@ class AMDStream(EventStream):
     def __init__(self, _events, _version=VERSION):
         super().__init__(_events, AMDtype, _version)
 
+    def readAMDStream(event_data):
+        f_cursor = 16
+        end = len(event_data)
+        events = []
+        currentTime = 0
+        while(f_cursor < end):
+            byte = event_data[f_cursor]
+            if byte & 0xfe == 0xfe:
+                if byte == 0xfe:  # Reset event
+                    pass
+                else:  # Overflow event
+                    currentTime += 0xfe
+
+            else:
+                f_cursor += 1
+                byte1 = ESdate[f_cursor]
+                f_cursor += 1
+                byte2 = ESfile[f_cursor]
+                f_cursor += 1
+                byte3 = ESfile[f_cursor]
+                currentTime += byte
+                x = byte1
+                y = byte2
+                s = byte3
+                events.append((x, y, s, currentTime))
+            f_cursor += 1
+        return AMDStream(events, version)
+
     def write(self, filename):
         """
         """

@@ -28,14 +28,14 @@ def readStream(filename):
     print("reading EventStream file version " + stream_version + ", type " + str(stream_type))
 
     if stream_type is 0:
-        GenericStream.read(event_data)
+        return GenericStream.read(event_data)
     elif stream_type is 1:
-        DVSStream.read(event_data)
+        return DVSStream.read(event_data, stream_version)
     elif stream_type is 2:
-        ATISStream.read(event_data)
+        return ATISStream.read(event_data)
     elif stream_type is 3:
-        AMDStream.read(event_data)
+        return AMDStream.read(event_data)
     elif stream_type is 4:
-        ColorStream.read(event_data)
+        return ColorStream.read(event_data)
     else:
         return None

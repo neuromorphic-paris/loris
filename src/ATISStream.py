@@ -4,9 +4,8 @@ import os
 from .EventStream import EventStream
 from .config import VERSION, TYPE
 
-ATIStype=[('x',np.uint16), ('y', np.uint16),
-          ('p', np.bool_), ('isTc', np.bool_), ('ts', np.uint64)
-          ]
+ATIStype = [('x',np.uint16), ('y', np.uint16),
+            ('p', np.bool_), ('isTc', np.bool_), ('ts', np.uint64)]
 
 
 class ATISStream(EventStream):
@@ -16,6 +15,39 @@ class ATISStream(EventStream):
         super().__init__(_events, ATIStype, _version)
         self.width = np.uint16(_width)
         self.height = np.uint16(_height)
+
+    def read(event_data):
+        width = event_data[17] << 8 + event_data[16]
+        height = event_data[19] << 8 + event_data[18]
+        f_cursor = 20
+        end = len(event_data)
+        events = []
+        currentTime = 0
+        while(f_cursor < end):
+            byte = event_data[f_cursor]
+            if byte & 0xfc == 0xfc:
+                if byte == 0xfc:  # Reset event
+                    pass
+                else:  # Overflow event
+                    currentTime += (byte & 0x03) * 64
+
+            else:
+                f_cursor += 1
+                byte1 = ESdate[f_cursor]
+                f_cursor += 1
+                byte2 = ESfile[f_cursor]
+                f_cursor += 1
+                byte3 = ESfile[f_cursor]
+                f_cursor += 1
+                byte4 = ESfile[f_cursor]
+                currentTime += (byte >> 2)
+                x = ((byte2 << 8) | byte1)
+                y = ((byte4 << 8) | byte3)
+                isTc = (byte & 0x01)
+                p = ((byte & 0x02) >> 1)
+                events.append((x, y, p, isTc, currentTime))
+            f_cursor += 1
+        return ATISStream(width, height, events, version)
 
     def write(self, filename):
         """

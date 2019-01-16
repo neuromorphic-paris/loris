@@ -12,6 +12,44 @@ class GenericStream(EventStream):
     def __init__(self, _events, _version=VERSION):
         super().__init__(_events, Generictype, _version)
 
+    def return_test_string():
+        print("generic middle")
+        return "generic test"
+
+    def read(event_data):
+        f_cursor = 15
+        events = []
+        currentTime = 0
+        end = len(event_data)
+        while(f_cursor < end):
+            byte = event_data[f_cursor]
+            if byte & 0xfe == 0xfe:
+                if byte == 0xfe:  # Reset event
+                    pass
+                else:  # Overflow event
+                    currentTime += 0xfe
+            else:
+                currentTime += byte
+                is_last = False
+                size = 0
+                i = 0
+                while (not is_last):
+                    f_cursor += 1
+                    byte = event_data[f_cursor]
+                    is_last = True * (byte & 0x01)
+                    size += (byte >> 1) << (7 * i)
+                    i += 1
+                data = 0
+                k = 0
+                for j in range(i):
+                    f_cursor += 1
+                    byte = event_data[f_cursor]
+                    data += byte << (7*k)
+                    k += 1
+                events.append((data, currentTime))
+            f_cursor += 1
+        return GenericStream(events, version)
+
     def write(self, filename):
         """
         Warning this function is broken;
