@@ -1,6 +1,6 @@
 
-![natrix](natrixBanner.svg "The Natrix Banner")
-# natrix
+![loris](loris.gif "The Loris Banner")
+# loris
 python3 library to handle [EventStream](https://github.com/neuromorphic-paris/event_stream) files
 
 ### Install
@@ -12,8 +12,8 @@ Currently only locally. Soon to be released via PyPi.
 To read an .es file, use
 
 ~~~python
-import natrix
-stream = natrix.readsteam("filename")
+import loris
+stream = loris.readsteam("filename")
 ~~~
 
 The function returns a [numpy recarray](https://docs.scipy.org/doc/numpy/reference/generated/numpy.recarray.html) containing an array of event data, which can in turn be accessed by calling ``stream.data``
