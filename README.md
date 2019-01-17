@@ -2,7 +2,10 @@
 python3 library to handle event-based file formats such as [.es](https://github.com/neuromorphic-paris/event_stream), [.dat]() or [.aedat](https://inivation.com/support/software/fileformat/) and also [amazing animal](https://giphy.com/search/slow-loris)
 
 ### Install
-Currently only locally. Soon to be released via PyPi.
+~~~python
+pip install loris
+~~~
+
 #### Dependencies
  - numpy
 
