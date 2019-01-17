@@ -1,4 +1,5 @@
 import numpy as np
+from tqdm import tqdm
 import os
 from .EventStream import EventStream
 from .config import VERSION, TYPE
@@ -22,6 +23,7 @@ class DVSStream(EventStream):
         end = len(event_data)
         events = []
         current_time = 0
+        bar = tqdm(total=int(end), unit_scale=True, ncols=80, unit='Events')
         while(file_cursor < end):
             byte = event_data[file_cursor]
             if byte & 0xfe == 0xfe:
@@ -38,12 +40,15 @@ class DVSStream(EventStream):
                 byte3 = event_data[file_cursor]
                 file_cursor += 1
                 byte4 = event_data[file_cursor]
+                bar.update(4)
                 current_time += (byte >> 1)
                 x = ((byte2 << 8) | byte1)
                 y = ((byte4 << 8) | byte3)
                 is_increase = (byte & 0x01)
                 events.append((x, y, is_increase, current_time))
             file_cursor += 1
+            bar.update(1)
+        bar.close()
         return DVSStream(width, height, events, version)
 
     def write(self, filename):
@@ -65,6 +70,10 @@ class DVSStream(EventStream):
         to_write.append(np.uint8(self.height))
         to_write.append(np.uint8(self.height >> 8))
         previous_ts = 0
+        bar_scale = 1000
+        counter = 0
+        bar = tqdm(total=self.data.size/bar_scale, unit_scale=True,
+                   ncols=80, unit='kEvents')
         for datum in self.data:
             relative_ts = datum.ts - previous_ts
             if relative_ts >= 127:
@@ -79,6 +88,10 @@ class DVSStream(EventStream):
             to_write.append(np.uint8(datum.y))
             to_write.append(np.uint8(datum.y >> 8))
             previous_ts = datum.ts
+            counter += 1
+            if counter % bar_scale == 0:
+                bar.update(1)
         file = open(filename, 'wb')
         file.write(to_write)
         file.close()
+        bar.close()

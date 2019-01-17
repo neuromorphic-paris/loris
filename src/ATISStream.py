@@ -73,7 +73,8 @@ class ATISStream(EventStream):
         previous_ts = 0
         bar_scale = 1000
         counter = 0
-        bar = tqdm(total=self.data.size/bar_scale, unit_scale=True, ncols=80, unit='kEvents')
+        bar = tqdm(total=self.data.size/bar_scale, unit_scale=True,
+                   ncols=80, unit='kEvents')
         for datum in self.data:
             relative_ts = datum.ts - previous_ts
             if relative_ts >= 63:
