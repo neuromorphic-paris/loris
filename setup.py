@@ -9,7 +9,7 @@ setuptools.setup(
     url='https://github.com/neuromorphic-paris/loris',
     author='Gregor Lenz',
     author_email='gregor.lenz@inserm.fr',
-    description='python3 library to handle event-based files',
+    description='read and write files from neuromorphic cameras',
     long_description=long_description,
     long_description_content_type="text/markdown",
     packages=setuptools.find_packages(),

@@ -1,5 +1,5 @@
 # loris
-python3 library to handle event-based file formats such as [.es](https://github.com/neuromorphic-paris/event_stream), [.dat]() or [.aedat](https://inivation.com/support/software/fileformat/) and also [amazing animal](https://giphy.com/search/slow-loris)
+python3 library to handle different file formats from neuromorphic cameras such as **.dat**, [.aedat](https://inivation.com/support/software/fileformat/) or [.es](https://github.com/neuromorphic-paris/event_stream) and also [amazing animal](https://giphy.com/search/slow-loris)
 
 ### Install
 ~~~python
