@@ -1,4 +1,7 @@
+import numpy as np
+
 VERSION = '2.0.0'
+
 TYPE = {
         'Generic': 0,
         'DVS': 1,

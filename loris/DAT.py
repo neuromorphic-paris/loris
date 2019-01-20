@@ -19,7 +19,7 @@ def peek(f, length=1):
     return data
 
 
-def readATIS_td_better(file_name, orig_at_zero=True, drop_negative_dt=True,
+def parse_file(file_name, orig_at_zero=True, drop_negative_dt=True,
                        verbose=True, events_restriction=[0, np.inf]):
     """ laisse les events avec le meme timestamp ! """
 
