@@ -12,7 +12,7 @@ def read_file(file_name):
     if file_name.endswith('.es') and event_data[0:12] == b'Event Stream':
         return event_stream.parse_file(event_data)
     elif file_name.endswith('.dat'):  # and event_data[0:11] == b'% Data file':
-        return dat.parse_file(event_data)
+        return dat.parse_file(file_name)
     elif file_name.endswith('.aedat'):
         print("Not yet implemented")
         return None
