@@ -4,6 +4,7 @@
 from . import config
 from struct import unpack
 import numpy as np
+from tqdm import tqdm
 import sys
 
 
@@ -71,6 +72,7 @@ def parse_file(file_name, orig_at_zero=False, drop_negative_dt=False,
     coords = np.zeros((Nevents, 2), dtype=int)
 
     ActualEvents = 0
+    bar = tqdm(total=Nevents, unit_scale=True, ncols=80, unit=' Events')
     for i in np.arange(0, int(Nevents)):
         event = unpack('Q', file.read(8))
         ts = event[0] & 0x00000000FFFFFFFF
@@ -89,7 +91,9 @@ def parse_file(file_name, orig_at_zero=False, drop_negative_dt=False,
             sys.stdout.flush()
         if i > events_restriction[1]:
             break
+        bar.update(1)
     file.close()
+    bar.close()
     if verbose:
         print("> After loading events, actually found {0} events."
               .format(ActualEvents))
