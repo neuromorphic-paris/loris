@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name='loris',
-    version='0.1.0',
+    version='0.2.0',
     url='https://github.com/neuromorphic-paris/loris',
     author='Gregor Lenz',
     author_email='gregor.lenz@inserm.fr',
@@ -13,6 +13,7 @@ setuptools.setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     packages=setuptools.find_packages(),
+    install_requires=['numpy'],
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
