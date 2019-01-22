@@ -47,7 +47,7 @@ def parse_file(file_name, orig_at_zero=True, drop_negative_dt=False,
                   ', event size is ' + str(ev_size))
         if ev_size != 8:
             print('Wrong event size. Aborting.')
-            return -1, -1, -1, -1
+            return None
     else:  # set default ev type and size
         if verbose:
             print('No header. Setting default event type and size.')
@@ -151,4 +151,4 @@ def parse_file(file_name, orig_at_zero=True, drop_negative_dt=False,
     new['x'] = coords[:, 0]
     new['y'] = coords[:, 1]
     new['p'] = polarities
-    return new
+    return new,

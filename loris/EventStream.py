@@ -39,7 +39,7 @@ def parse_file(event_data):
     else:
         return None
 
-def write_file(events, output_file_name):
+def write_file(events, output_file_name, width, height):
     if not os.path.exists(os.path.dirname(output_file_name)):
         try:
             os.makedirs(os.path.dirname(output_file_name))
@@ -57,10 +57,10 @@ def write_file(events, output_file_name):
                ncols=80, unit='kEvents')
     if 'is_tc' in events.dtype.names:
         print("detected ATIS events")
-        return write_atis_file(events, output_file_name, to_write, previous_ts, bar_scale, counter, bar)
+        return write_atis_file(events, output_file_name, to_write, previous_ts, bar_scale, counter, bar, width, height)
     elif 'is_increase' in events.dtype.names:
         print("detected DVS events")
-        return write_dvs_file(events, output_file_name, to_write, previous_ts, bar_scale, counter, bar)
+        return write_dvs_file(events, output_file_name, to_write, previous_ts, bar_scale, counter, bar, width, height)
     else:
         print("Not sure which type of events are encoded here.")
         return None
@@ -87,16 +87,17 @@ def parse_dvs_data(event_data, version, width, height, file_cursor, end, events,
             x = ((byte2 << 8) | byte1)
             y = ((byte4 << 8) | byte3)
             is_increase = (byte & 0x01)
-            events.append((x, y, is_increase, current_time))
+            events.append((current_time, x, y, is_increase))
         file_cursor += 1
         bar.update(1)
     bar.close()
-    return np.array(events, dtype=config.DVStype)
+    return np.array(events, dtype=config.DVStype), width, height
 
-def write_dvs_file(events, output_file_name, to_write, previous_ts, bar_scale, counter, bar):
+def write_dvs_file(events, output_file_name, to_write, previous_ts, bar_scale, counter, bar, width, height):
     to_write.append(config.TYPE['DVS'])
-    width = max(events['x']) + 1
-    height = max(events['y']) + 1
+    if width is 0:
+        width = max(events['x']) + 1
+        height = max(events['y']) + 1
     to_write.append(np.uint8(width))
     to_write.append(np.uint8(width >> 8))
     to_write.append(np.uint8(height))
@@ -147,11 +148,11 @@ def parse_atis_data(event_data, version, width, height, file_cursor, end, events
             y = ((byte4 << 8) | byte3)
             is_tc = (byte & 0x01)
             p = ((byte & 0x02) >> 1)
-            events.append((x, y, p, is_tc, current_time))
+            events.append((current_time, x, y, p, is_tc))
         file_cursor += 1
         bar.update(1)
     bar.close()
-    return np.array(events, dtype=config.ATIStype)
+    return np.array(events, dtype=config.ATIStype), width, height
 
 def write_atis_file(events, output_file_name, to_write, previous_ts, bar_scale, counter, bar):
     to_write.append(config.TYPE['ATIS'])

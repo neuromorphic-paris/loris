@@ -14,10 +14,10 @@ TYPE = {
         }
 REVTYPE = ['Generic', 'DVS', 'ATIS', 'AMD', 'Color']
 Generictype = [('data', np.int), ('ts', np.uint64)]
-DVStype = [('x', np.uint16), ('y', np.uint16),
-           ('is_increase', np.bool_), ('ts', np.uint64)]
-ATIStype = [('x', np.uint16), ('y', np.uint16),
-            ('p', np.bool_), ('is_tc', np.bool_), ('ts', np.uint64)]
+DVStype = [('ts', np.uint64), ('x', np.uint16), ('y', np.uint16),
+           ('is_increase', np.bool_)]
+ATIStype = [('ts', np.uint64), ('x', np.uint16), ('y', np.uint16),
+            ('p', np.bool_), ('is_tc', np.bool_)]
 AMDtype = [('x', np.uint8), ('y', np.uint8), ('s', np.uint8), ('int', np.uint8), ('ts', np.uint64)]
 Colortype = [('x', np.uint16), ('y', np.uint8), ('r', np.uint8),
              ('g', np.uint8), ('b', np.uint8), ('ts', np.uint64)]
