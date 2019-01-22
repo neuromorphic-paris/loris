@@ -102,21 +102,20 @@ def write_dvs_file(events, output_file_name, to_write, previous_ts, bar_scale, c
     to_write.append(np.uint8(width >> 8))
     to_write.append(np.uint8(height))
     to_write.append(np.uint8(height >> 8))
-    events = events.view(np.recarray)
-    for datum in events:
-        relative_ts = datum.ts - previous_ts
+    for event in events:
+        relative_ts = event[0] - previous_ts
         if relative_ts >= 127:
             number_of_overflows = int(relative_ts / 127)
             for i in range(number_of_overflows):
                 to_write.append(0xff)
             relative_ts -= number_of_overflows * 127
         to_write.append(np.uint8((np.uint8(relative_ts) << 1)
-                        | (datum.is_increase & 0x01)))
-        to_write.append(np.uint8(datum.x))
-        to_write.append(np.uint8(datum.x >> 8))
-        to_write.append(np.uint8(datum.y))
-        to_write.append(np.uint8(datum.y >> 8))
-        previous_ts = datum.ts
+                        | (event[3] & 0x01)))
+        to_write.append(np.uint8(event[1]))
+        to_write.append(np.uint8(event[1] >> 8))
+        to_write.append(np.uint8(event[2]))
+        to_write.append(np.uint8(event[2] >> 8))
+        previous_ts = event[0]
         counter += 1
         if counter % bar_scale == 0:
             bar.update(1)
@@ -154,17 +153,17 @@ def parse_atis_data(event_data, version, width, height, file_cursor, end, events
     bar.close()
     return np.array(events, dtype=config.ATIStype), width, height
 
-def write_atis_file(events, output_file_name, to_write, previous_ts, bar_scale, counter, bar):
+def write_atis_file(events, output_file_name, to_write, previous_ts, bar_scale, counter, bar, width, height):
     to_write.append(config.TYPE['ATIS'])
-    width = max(events['x']) + 1
-    height = max(events['y']) + 1
+    if width is 0:
+        width = max(events['x']) + 1
+        height = max(events['y']) + 1
     to_write.append(np.uint8(width))
     to_write.append(np.uint8(width >> 8))
     to_write.append(np.uint8(height))
     to_write.append(np.uint8(height >> 8))
-    events = events.view(np.recarray)
-    for datum in events:
-        relative_ts = datum.ts - previous_ts
+    for event in events:
+        relative_ts = event[0] - previous_ts
         if relative_ts >= 63:
             number_of_overflows = int(relative_ts / 63)
             relative_ts -= number_of_overflows * 63
@@ -174,12 +173,12 @@ def write_atis_file(events, output_file_name, to_write, previous_ts, bar_scale, 
             if number_of_overflows > 0:
                 to_write.append(0xfc | np.uint8(number_of_overflows))
         to_write.append(np.uint8((np.uint8(relative_ts) << 2) & 0xfc)
-                        | (datum.p << 1) | datum.is_tc)
-        to_write.append(np.uint8(datum.x))
-        to_write.append(np.uint8(datum.x >> 8))
-        to_write.append(np.uint8(datum.y))
-        to_write.append(np.uint8(datum.y >> 8))
-        previous_ts = datum.ts
+                        | (event[3] << 1) | event[4])
+        to_write.append(np.uint8(event[1]))
+        to_write.append(np.uint8(event[1] >> 8))
+        to_write.append(np.uint8(event[2]))
+        to_write.append(np.uint8(event[2] >> 8))
+        previous_ts = event[0]
         counter += 1
         if counter % bar_scale == 0:
             bar.update(1)
