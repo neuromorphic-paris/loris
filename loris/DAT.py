@@ -14,7 +14,7 @@ def peek(f, length=1):
     return data
 
 
-def parse_file(file_name, orig_at_zero=True, drop_negative_dt=False,
+def parse_file(file_name, orig_at_zero=False, drop_negative_dt=False,
                verbose=True, events_restriction=[0, np.inf]):
     if '.v2' in file_name:
         print("V2 detected")
@@ -151,4 +151,4 @@ def parse_file(file_name, orig_at_zero=True, drop_negative_dt=False,
     new['x'] = coords[:, 0]
     new['y'] = coords[:, 1]
     new['p'] = polarities
-    return new,
+    return new
