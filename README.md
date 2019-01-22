@@ -6,25 +6,25 @@ python3 library to handle different file formats from neuromorphic cameras such 
 pip install loris
 ~~~
 
-#### Dependencies
- - numpy
-
 ### How to loris
-To read a file, use
-
+##### Read a file
 ~~~python
 import loris
-stream = loris.readsteam("filename")
+events = loris.read_file("path_to_file")
 ~~~
+which returns a [numpy structured array](https://docs.scipy.org/doc/numpy/user/basics.rec.html) of event data.
 
-The function returns a [numpy recarray](https://docs.scipy.org/doc/numpy/reference/generated/numpy.recarray.html) containing an array of event data
-Each field can be accessed using its name as ``stream.data.<fieldname>`` which returns again an array.
-
-As an example to loop over all events:
+##### Loop over all events
 ~~~python
-for datum in stream data:
-    print (data.ts)
+for event in events:
+    print("ts:", event['ts'], "x:", event['x'], "y:", event['y'])
 ~~~
+
+##### Write events to file using one of the three formats
+~~~python
+loris.write_events_to_file(events, "path_to_new_file")
+~~~
+
 
 Please use Pylint before creating a Pull Request. [PEP 8 Python Style](https://www.python.org/dev/peps/pep-0008/) preferred. This will make loris happy
 
