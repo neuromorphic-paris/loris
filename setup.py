@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name='loris',
-    version='0.2.0',
+    version='0.2.1',
     url='https://github.com/neuromorphic-paris/loris',
     author='Gregor Lenz',
     author_email='gregor.lenz@inserm.fr',
