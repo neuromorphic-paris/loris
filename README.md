@@ -1,12 +1,13 @@
 # loris
-read and write different file formats from neuromorphic cameras such as [.aedat](https://inivation.com/support/software/fileformat/), **.dat** or [.es](https://github.com/neuromorphic-paris/event_stream) and also [amazing animal](https://giphy.com/search/slow-loris)
+read and write different file formats from neuromorphic cameras such as [.aedat](https://inivation.com/support/software/fileformat/), **.dat**, [.es](https://github.com/neuromorphic-paris/event_stream) or **.csv** and also [amazing animal](https://giphy.com/search/slow-loris)
 
 ### Supported formats
 |        | version | read    | write   |
 |--------|--------:|:-------:|:-------:|
 | .aedat | 3.x     | &#9744; | &#9744; |
-| .dat   | ?       | &#9745; | &#9744; |
+| .dat   | n/a     | &#9745; | &#9744; |
 | .es    | 2.x     | &#9745; | &#9745; |
+| .csv   | -       | &#9745; | &#9744; |
 
 ### Install
 ~~~python
