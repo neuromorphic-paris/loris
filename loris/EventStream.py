@@ -6,7 +6,13 @@ from . import config
 
 """read and write events in the Event Stream format
 """
-def parse_file(event_data):
+def parse_file(file_name):
+    event_file = open(file_name, 'rb')
+    event_data = event_file.read()
+    event_file.close()
+    if event_data[0:12] != b'Event Stream':
+        print("This does not look like an .es file. Aborting.")
+        return event_data[0:12]
     stream_version_major = event_data[12]
     stream_version_minor = event_data[13]
     stream_version_patch = event_data[14]

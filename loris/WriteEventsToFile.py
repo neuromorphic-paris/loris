@@ -13,7 +13,6 @@ def write_events_to_file(events, output_file_name, width=0, height=0):
         print("Not yet implemented")
         return None
     else:
-        print("File format not supported, returning null. It is highly likely "
-        + "that it is straightforward to include your file's version to loris. "
-        + "Please submit an issue on Github, thanks!")
+        print("I don't know what kind of format you want to write to. "
+              + "Please specify a valid file name ending such as .aedat etc")
         return None
