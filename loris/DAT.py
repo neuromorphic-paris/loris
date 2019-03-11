@@ -4,7 +4,7 @@
 from . import config
 from struct import unpack
 import numpy as np
-from tqdm import tqdm
+from tqdm.auto import tqdm
 import sys
 
 
