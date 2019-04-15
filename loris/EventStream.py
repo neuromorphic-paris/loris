@@ -157,7 +157,7 @@ def parse_atis_data(event_data, version, width, height, file_cursor, end, events
         file_cursor += 1
         bar.update(1)
     bar.close()
-    return np.array(events, dtype=config.ATIStype), width, height
+    return np.array(events, dtype=config.ATIStype) # , width, height
 
 def write_atis_file(events, output_file_name, to_write, previous_ts, bar_scale, counter, bar, width, height):
     to_write.append(config.TYPE['ATIS'])

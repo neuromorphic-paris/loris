@@ -29,8 +29,6 @@ def check_incoherent_events(events):
         if index > 0 and events['ts'][index] < events['ts'][index-1]:
             indices.append(index)
             #print("Timestamp index - 1: "+ str(index-1) + ", index: " + str(index))
-    if len(indices) == 0:
-        print("All timestamps in correct order.")
-    else:
+    if len(indices) != 0:
         print("Not all timestamps are in ascending order.")
     return
