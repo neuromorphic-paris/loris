@@ -1,0 +1,3 @@
+[submodule "third_party/command_line_tools"]
+	path = third_party/command_line_tools
+	url = https://github.com/neuromorphic-paris/command_line_tools.git
