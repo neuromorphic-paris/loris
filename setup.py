@@ -31,7 +31,7 @@ def copy_and_resolve(filename, target_directory):
 shutil.rmtree(os.path.join(dirname, 'loris'), ignore_errors=True)
 os.mkdir(os.path.join(dirname, 'loris'))
 copy_and_resolve(os.path.join(dirname, 'source', 'cpp', 'loris_extension.cpp'), os.path.join(dirname, 'loris'))
-for name in ['__init__.py', 'config.py', 'CSV.py', 'DAT.py', 'EventStream.py', 'ReadFile.py', 'WriteEventsToFile']:
+for name in ['__init__.py', 'config.py', 'CSV.py', 'DAT.py', 'EventStream.py', 'ReadFile.py', 'WriteEventsToFile.py']:
     shutil.copy2(os.path.join(dirname, 'source', name), os.path.join(dirname, 'loris'))
 
 # load data used in setup
@@ -52,8 +52,8 @@ setuptools.setup(
     name='loris',
     version='0.2.1',
     url='https://github.com/neuromorphic-paris/loris',
-    author='Gregor Lenz',
-    author_email='gregor.lenz@inserm.fr',
+    author='Gregor Lenz, Alexandre Marcireau',
+    author_email='gregor.lenz@inserm.fr, alexandre.marcireau@gmail.com',
     description='read and write files from neuromorphic cameras',
     long_description=long_description,
     long_description_content_type='text/markdown',
