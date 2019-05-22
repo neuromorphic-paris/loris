@@ -4,8 +4,31 @@ import os
 import re
 import setuptools
 import shutil
+import subprocess
 import sys
 dirname = os.path.dirname(os.path.realpath(__file__))
+
+def check_submodules():
+    """ verify that the submodules are checked out and clean
+        use `git submodule update --init --recursive`; on failure
+    """
+    if not os.path.exists('.git'):
+        return
+    with open('.gitmodules') as f:
+        for l in f:
+            if 'path' in l:
+                p = l.split('=')[-1].strip()
+                if not os.path.exists(p):
+                    raise ValueError('Submodule %s missing' % p)
+
+    proc = subprocess.Popen(['git', 'submodule', 'status'],
+                            stdout=subprocess.PIPE)
+    status, _ = proc.communicate()
+    status = status.decode("ascii", "replace")
+    for line in status.splitlines():
+        if line.startswith('-') or line.startswith('+'):
+            recursive_init = subprocess.Popen(['git', 'submodule', 'update', '--init', '--recursive'])
+            recursive_init.wait()
 
 def copy_and_resolve(filename, target_directory):
     """
@@ -28,6 +51,7 @@ def copy_and_resolve(filename, target_directory):
         copy_and_resolve(child, target_directory)
 
 # create the build directory
+check_submodules()
 shutil.rmtree(os.path.join(dirname, 'loris'), ignore_errors=True)
 os.mkdir(os.path.join(dirname, 'loris'))
 copy_and_resolve(os.path.join(dirname, 'source', 'cpp', 'loris_extension.cpp'), os.path.join(dirname, 'loris'))
