@@ -1,6 +1,7 @@
 from . import EventStream as event_stream
 from . import DAT as dat
 from . import CSV as csv
+import loris_extension
 
 
 def read_file(file_name):
@@ -13,7 +14,7 @@ def read_file(file_name):
     elif file_name.endswith('.dat'):
         events = dat.parse_file(file_name)
     elif file_name.endswith('.es'):
-        events = event_stream.parse_file(file_name)
+        parsed_file = loris_extension.read_event_stream(file_name)
     elif file_name.endswith('.csv'):
         events = csv.parse_file(file_name)
     else:
