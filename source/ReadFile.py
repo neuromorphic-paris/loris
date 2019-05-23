@@ -1,7 +1,13 @@
 from . import EventStream as event_stream
 from . import DAT as dat
 from . import CSV as csv
-import loris_extension
+
+is_using_fallback = False
+try:
+    import loris_extension
+except ImportError:
+    is_using_fallback = True
+    print("Could not import c++ extension to speed up things. Falling back to pure Python implementation...")
 
 
 def read_file(file_name):
@@ -11,8 +17,13 @@ def read_file(file_name):
     if file_name.endswith('.aedat'):
         print("Not yet implemented")
         return None
-    elif file_name.endswith('.dat'):
-        events = dat.parse_file(file_name)
+    elif file_name.endswith('.dat') and '_td' in file_name:
+        print('Reading dat td file')
+        parsed_file = loris_extension.read_dat_td(file_name)
+    elif file_name.endswith('.dat') and '_aps' in file_name:
+        parsed_file = loris_extension.read_dat_aps(file_name)
+    elif file_name.endswith('.es') and is_using_fallback:
+        parsed_file = event_stream.parse_file(file_name)
     elif file_name.endswith('.es'):
         parsed_file = loris_extension.read_event_stream(file_name)
     elif file_name.endswith('.csv'):
