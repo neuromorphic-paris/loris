@@ -32,6 +32,4 @@ for event in my_file['events']:
 loris.write_events_to_file(my_file, "/path/to/my-file.es")
 ~~~
 
-Please use Pylint before creating a Pull Request. This will make loris happy
-
 ![loris](loris.gif "The Loris Banner")
