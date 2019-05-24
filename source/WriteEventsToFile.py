@@ -3,7 +3,7 @@ import loris_extension
 
 def write_events_to_file(parsed_file, output_file_name):
     """store a structured numpy array of events to a given file format
-    supported file formats are .aedat, .dat and .es
+    supported file format is .es
     """
     res = None
     if output_file_name.endswith('.es'):

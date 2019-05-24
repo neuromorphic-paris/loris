@@ -1,5 +1,5 @@
-from . import CSV as csv
 import loris_extension
+from . import CSV as csv
 
 
 def read_file(file_name, file_name_dat_aps=None):
