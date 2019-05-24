@@ -55,7 +55,7 @@ check_submodules()
 shutil.rmtree(os.path.join(dirname, 'loris'), ignore_errors=True)
 os.mkdir(os.path.join(dirname, 'loris'))
 copy_and_resolve(os.path.join(dirname, 'source', 'cpp', 'loris_extension.cpp'), os.path.join(dirname, 'loris'))
-for name in ['__init__.py', 'config.py', 'CSV.py', 'DAT.py', 'EventStream.py', 'ReadFile.py', 'WriteEventsToFile.py']:
+for name in ['__init__.py', 'config.py', 'CSV.py', 'ReadFile.py', 'WriteEventsToFile.py']:
     shutil.copy2(os.path.join(dirname, 'source', name), os.path.join(dirname, 'loris'))
 
 # load data used in setup
