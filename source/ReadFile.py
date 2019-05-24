@@ -22,6 +22,8 @@ def read_file(file_name):
               + "Please specify a valid file name ending such as .aedat etc")
         return None
     check_incoherent_events(parsed_file)
+
+    print("Read " + str(len(parsed_file['events'])) + " events from " + parsed_file['type'] + " file.")
     return parsed_file
 
 def check_incoherent_events(parsed_file):
