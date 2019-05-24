@@ -1,5 +1,3 @@
-from . import EventStream as event_stream
-from . import DAT as dat
 from . import CSV as csv
 import loris_extension
 
@@ -9,7 +7,7 @@ def read_file(file_name):
     supported file formats are .aedat, .dat, .es and .csv
     """
     if file_name.endswith('.aedat'):
-        print("Not yet implemented")
+        print("Not yet implemented ok")
         return None
     elif file_name.endswith('.dat') and '_td' in file_name:
         parsed_file = loris_extension.read_dat_td(file_name)
