@@ -18,18 +18,18 @@ pip install loris
 ##### Read a file, for example a .dat file
 ~~~python
 import loris
-events = loris.read_file("/path/to/my-file.dat")
+my_file = loris.read_file("/path/to/my-file.dat")
 ~~~
 
 ##### Loop over all events
 ~~~python
-for event in events:
-    print("ts:", event['ts'], "x:", event['x'], "y:", event['y'], "p:", event['p'])
+for event in my_file['events']:
+    print("ts:", event['t'], "x:", event['x'], "y:", event['y'], "p:", event['polarity'])
 ~~~
 
 ##### Write events to file using one of the supported formats, for example .es
 ~~~python
-loris.write_events_to_file(events, "/path/to/my-file.es")
+loris.write_events_to_file(my_file, "/path/to/my-file.es")
 ~~~
 
 Please use Pylint before creating a Pull Request. This will make loris happy
