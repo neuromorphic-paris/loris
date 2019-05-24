@@ -361,7 +361,7 @@ static PyObject* read_dat_td(PyObject* self, PyObject* args) {
     }
     auto result = PyDict_New();
     try {
-        npy_intp size;
+        npy_intp size = 0;
         {
             auto stream = sepia::filename_to_ifstream(filename_as_char_array);
             const auto header = dat::read_header(*stream);
@@ -401,7 +401,7 @@ static PyObject* read_dat_aps(PyObject* self, PyObject* args) {
     }
     auto result = PyDict_New();
     try {
-        npy_intp size;
+        npy_intp size = 0;
         {
             auto stream = sepia::filename_to_ifstream(filename_as_char_array);
             const auto header = dat::read_header(*stream);
@@ -443,7 +443,7 @@ static PyObject* read_dat_td_aps(PyObject* self, PyObject* args) {
     }
     auto result = PyDict_New();
     try {
-        npy_intp size;
+        npy_intp size = 0;
         {
             auto stream = sepia::filename_to_ifstream(td_filename_as_char_array);
             const auto header = dat::read_header(*stream);
