@@ -74,7 +74,7 @@ with open('README.md', 'r') as file:
 # setup the package
 setuptools.setup(
     name='loris',
-    version='0.2.1',
+    version='0.3.0',
     url='https://github.com/neuromorphic-paris/loris',
     author='Gregor Lenz, Alexandre Marcireau',
     author_email='gregor.lenz@inserm.fr, alexandre.marcireau@gmail.com',
