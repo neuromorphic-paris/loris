@@ -2,7 +2,6 @@ import os
 import csv
 import numpy as np
 from tqdm.auto import tqdm
-from . import config
 
 
 def parse_file(file_name):
@@ -35,10 +34,10 @@ def parse_file(file_name):
                     lock = False
                 else:
                     pass
-                events.append((time, row[0], row[1], True))
+                events.append((time, row[0], row[1]))
                 bar.update(1)
             bar.close()
-            return np.array(events, dtype=config.DVStype)
+            return np.array(events, dtype=[('t', np.uint64), ('x', np.uint16), ('y', np.uint16)])
         if event_length == 4:
             print("Assuming classic DVS event (x, y, p, t)")
             events.append((first_event[0], first_event[1], first_event[2], first_event[3]))
@@ -46,4 +45,4 @@ def parse_file(file_name):
                 events.append((row[0], row[1], row[2], row[3]))
                 bar.update(1)
             bar.close()
-            return np.array(events, dtype=config.DVStype)
+            return np.array(events, dtype=[('t', np.uint64), ('x', np.uint16), ('y', np.uint16), ('is_increase', np.bool_)])
