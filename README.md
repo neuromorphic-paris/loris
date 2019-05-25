@@ -1,6 +1,8 @@
 # loris
 read and write different file formats from neuromorphic cameras such as [.aedat](https://inivation.com/support/software/fileformat/), **.dat**, [.es](https://github.com/neuromorphic-paris/event_stream) or **.csv** and also [amazing animal](https://giphy.com/search/slow-loris)
 
+Master Branch build status: [![Build Status](https://www.travis-ci.org/neuromorphic-paris/loris.svg?branch=master)](https://www.travis-ci.org/neuromorphic-paris/loris)
+
 ### Supported formats
 |        | version | read    | write   |
 |--------|--------:|:-------:|:-------:|
