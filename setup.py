@@ -30,6 +30,13 @@ def check_submodules():
             recursive_init = subprocess.Popen(['git', 'submodule', 'update', '--init', '--recursive'])
             recursive_init.wait()
 
+from distutils.command.sdist import sdist
+class sdist_checked(sdist):
+    """ check submodules on sdist to prevent incomplete tarballs """
+    def run(self):
+        check_submodules()
+        sdist.run(self)
+
 def copy_and_resolve(filename, target_directory):
     """
     copy_and_resolve operates on C++ files.
@@ -83,7 +90,7 @@ setuptools.setup(
     long_description_content_type='text/markdown',
     packages=['loris'],
     setup_requires=['numpy'],
-    install_requires=['numpy'],
+    install_requires=['numpy', 'tqdm'],
     classifiers=[
         'Programming Language :: Python :: 3',
         'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
@@ -98,5 +105,5 @@ setuptools.setup(
         include_dirs=[],
         libraries=(['pthread'] if sys.platform == 'linux' else [])
     )],
-    cmdclass={'build_ext': build_ext_factory}
+    cmdclass={'build_ext': build_ext_factory, "sdist": sdist_checked}
 )
