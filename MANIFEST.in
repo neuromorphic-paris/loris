@@ -1,1 +1,4 @@
 include loris/*.hpp
+recursive-include source *
+recursive-include third_party *
+include README.md

@@ -2,6 +2,7 @@
 build/
 dist/
 loris/
+MANIFEST
 *__pycache__/
 *.egg-info
 *.so
