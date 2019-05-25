@@ -1,5 +1,6 @@
 import loris_extension
 from . import CSV as csv
+import os
 
 
 def read_file(file_name, file_name_dat_aps=None):
@@ -25,7 +26,7 @@ def read_file(file_name, file_name_dat_aps=None):
         return None
 
     if file_name_dat_aps == None:
-        print("Read " + str(len(parsed_file['events'])) + " events from file with " + parsed_file['type'] + " events.")
+        print("Read " + str(len(parsed_file['events'])) + " events of type " + parsed_file['type'] + " from " + os.path.split(file_name)[-1])
     else:
         print("Read " + str(len(parsed_file['events'])) + " events from combined files with dvs and atis events.")
     return parsed_file
