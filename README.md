@@ -1,6 +1,6 @@
 # loris
-[![Build Status](https://www.travis-ci.org/neuromorphic-paris/loris.svg?label=Travis%20CI)](https://www.travis-ci.org/neuromorphic-paris/loris)
-
+[![Travis](https://img.shields.io/travis/neuromorphic-paris/loris/master.svg?label=Travis%20CI)](https://www.travis-ci.org/neuromorphic-paris/loris)
+    
 read and write different file formats from neuromorphic cameras such as [.aedat](https://inivation.com/support/software/fileformat/), **.dat**, [.es](https://github.com/neuromorphic-paris/event_stream) or **.csv** and also [amazing animal](https://giphy.com/search/slow-loris)
 
 ### Supported formats
