@@ -8,7 +8,7 @@ def read_file(file_name, file_name_dat_aps=None):
     supported file formats are .aedat, .dat, .es and .csv
     """
     if file_name.endswith('.aedat'):
-        print("Not yet implemented")
+        print("Parsing the aedat file format is not implemented. Have a look at the dv-python package.")
         return None
     elif file_name.endswith('.dat') and '_td' in file_name and file_name_dat_aps == None:
         parsed_file = loris_extension.read_dat_td(file_name)
