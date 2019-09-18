@@ -1,6 +1,7 @@
 import loris_extension
 from . import CSV as csv
 import os
+import numpy as np
 
 
 def read_file(file_name, file_name_dat_aps=None):
@@ -18,6 +19,8 @@ def read_file(file_name, file_name_dat_aps=None):
         parsed_file = loris_extension.read_dat_td_aps(file_name, file_name_dat_aps)
     elif file_name.endswith('.es'):
         parsed_file = loris_extension.read_event_stream(file_name)
+        parsed_file['events'] = parsed_file['events'].view(dtype=[(('ts', 't'), '<u8'), ('x', '<u2'),
+                                                                  ('y', '<u2'), (('p', 'is_increase'), '?')])
     elif file_name.endswith('.csv'):
         parsed_file = csv.parse_file(file_name)
     else:
@@ -25,6 +28,7 @@ def read_file(file_name, file_name_dat_aps=None):
               + "Please specify a valid file name ending such as .aedat etc")
         return None
 
+    parsed_file['events'] = parsed_file['events'].view(type=np.rec.recarray)
     if file_name_dat_aps == None:
         print("Read " + str(len(parsed_file['events'])) + " events of type " + parsed_file['type'] + " from " + os.path.split(file_name)[-1])
     else:

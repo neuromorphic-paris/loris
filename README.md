@@ -27,7 +27,7 @@ my_file = loris.read_file("/path/to/my-file.dat")
 ##### Loop over all events
 ~~~python
 for event in my_file['events']:
-    print("ts:", event['t'], "x:", event['x'], "y:", event['y'], "p:", event['polarity'])
+    print("ts:", event.t, "x:", event.x, "y:", event.y, "p:", event.p)
 ~~~
 
 ##### Write events to file using one of the supported formats, for example .es
