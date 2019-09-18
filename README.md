@@ -22,17 +22,18 @@ pip install loris
 ~~~python
 import loris
 my_file = loris.read_file("/path/to/my-file.dat")
+events = my_file['events']
 ~~~
 
 ##### Loop over all events
 ~~~python
-for event in my_file['events']:
+for event in events:
     print("ts:", event.t, "x:", event.x, "y:", event.y, "p:", event.p)
 ~~~
 
-##### Write events to file using one of the supported formats, for example .es
+##### Write events to a more efficient .es file
 ~~~python
-loris.write_events_to_file(my_file, "/path/to/my-file.es")
+loris.write_events_to_file(events, "/path/to/my-file.es")
 ~~~
 
 ![loris](loris.gif "The Loris Banner")
