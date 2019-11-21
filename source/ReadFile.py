@@ -4,7 +4,7 @@ import os
 import numpy as np
 
 
-def read_file(file_name, file_name_dat_aps=None):
+def read_file(file_name, file_name_dat_aps=None, verbose=False):
     """parse a file from a neuromorphic camera and return events
     supported file formats are .aedat, .dat, .es and .csv
     """
@@ -33,8 +33,8 @@ def read_file(file_name, file_name_dat_aps=None):
                                                                   ('y', '<u2'), ('is_threshold_crossing', '?'),
                                                                   (('p', 'polarity'), '?')])
     parsed_file['events'] = parsed_file['events'].view(type=np.rec.recarray)
-    if file_name_dat_aps == None:
+    if verbose and file_name_dat_aps == None:
         print("Read " + str(len(parsed_file['events'])) + " events of type " + parsed_file['type'] + " from " + os.path.split(file_name)[-1])
-    else:
+    elif verbose:
         print("Read " + str(len(parsed_file['events'])) + " events from combined files with dvs and atis events.")
     return parsed_file
