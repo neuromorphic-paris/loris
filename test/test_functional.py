@@ -8,7 +8,8 @@ examples_path = 'third_party/command_line_tools/third_party/sepia/third_party/ev
 
 class TestFunctionalAPI(unittest.TestCase):
     def setUp(self):
-        self.event_array, self.sensor_size, self.ordering = create_random_input_with_ordering("txyp")
+        self.event_array_txyp, self.sensor_size, self.ordering_txyp = create_random_input_with_ordering("txyp")
+        self.event_array_xytp, self.sensor_size, self.ordering_xytp = create_random_input_with_ordering("xytp")
 
     def test_read_es_atis(self):
         file_atis = loris.read_file(examples_path + 'atis.es')
@@ -44,10 +45,21 @@ class TestFunctionalAPI(unittest.TestCase):
         self.assertEqual(os.path.getsize(new_file), os.path.getsize(examples_path + 'dvs.es'))
         os.remove(new_file)
 
-    @unittest.skip("ok")
-    def test_write_dvs_from_array(self):
+    def test_write_dvs_from_event_array_txyp(self):
         new_file = 'new_dvs.es'
-        loris.write_events_to_file(self.event_array, new_file, self.ordering)
+        loris.write_events_to_file(self.event_array_txyp, new_file, self.ordering_txyp)
+        parsed_file = loris.read_file(new_file)
+        self.assertEqual(len(parsed_file['events']), 10000)
+
+    def test_write_dvs_from_event_array_txyp_without_ordering(self):
+        new_file = 'new_dvs.es'
+        loris.write_events_to_file(self.event_array_txyp, new_file)
+        parsed_file = loris.read_file(new_file)
+        self.assertEqual(len(parsed_file['events']), 10000)
+
+    def test_write_dvs_from_event_array_xytp(self):
+        new_file = 'new_dvs.es'
+        loris.write_events_to_file(self.event_array_xytp, new_file, self.ordering_xytp)
         parsed_file = loris.read_file(new_file)
         self.assertEqual(len(parsed_file['events']), 10000)
 
