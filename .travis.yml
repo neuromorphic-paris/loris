@@ -8,6 +8,7 @@ install:
 before_script:
   - pip install pytest
   - pip install tqdm
+  - pip install pytest
 
 script:
-  - pytest tests/tests.py
+  - python -m pytest --capture=no
