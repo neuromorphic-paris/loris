@@ -18,22 +18,26 @@ pip install loris
 ~~~
 
 ### How to loris
-##### Read a file, for example a .dat file
+##### Read a file, for example a .dat file and loop over all events
 ~~~python
 import loris
 my_file = loris.read_file("/path/to/my-file.dat")
 events = my_file['events']
-~~~
 
-##### Loop over all events
-~~~python
 for event in events:
     print("ts:", event.t, "x:", event.x, "y:", event.y, "p:", event.p)
 ~~~
 
-##### Write events to a more efficient .es file
+##### Write events from an array to an .es file
 ~~~python
-loris.write_events_to_file(events, "/path/to/my-file.es")
+ordering = "xytp"  # corresponds to the order in your array
+loris.write_events_to_file(event_array, "/path/to/my-file.es", ordering)
 ~~~
+
+##### Write structured events (with dtypes) to an .es file
+~~~python
+loris.write_events_to_file(structured_event_array, "/path/to/my-file.es")
+~~~
+
 
 ![loris](loris.gif "The Loris Banner")
