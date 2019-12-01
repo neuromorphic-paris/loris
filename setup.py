@@ -100,8 +100,8 @@ setuptools.setup(
         'loris_extension',
         language='c++',
         sources=[os.path.join(dirname, 'loris', 'loris_extension.cpp')],
-        extra_compile_args=['-std=c++11','-stdlib=libc++'],
-        extra_link_args=['-std=c++11', '-stdlib=libc++'],
+        extra_compile_args=(['-std=c++11'] if sys.platform == 'linux' else ['-std=c++11','-stdlib=libc++']),
+        extra_link_args=(['-std=c++11'] if sys.platform == 'linux' else ['-std=c++11','-stdlib=libc++']),
         include_dirs=[],
         libraries=(['pthread'] if sys.platform == 'linux' else [])
     )],
