@@ -8,7 +8,7 @@ If you're planning to read **.aedat** files, take a look at [dv-python](https://
 ### Supported formats
 |        | version | read    | write   |
 |--------|--------:|:-------:|:-------:|
-| .dat   | n/a     | &#9745; | &#9744; |
+| .dat   | 1/2     | &#9745; | &#9744; |
 | .es    | 2.x     | &#9745; | &#9745; |
 | .csv   | -       | &#9745; | &#9744; |
 
