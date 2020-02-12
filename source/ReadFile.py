@@ -11,12 +11,12 @@ def read_file(file_name, file_name_dat_aps=None, verbose=False):
     if file_name.endswith('.aedat'):
         print("Parsing the aedat file format is not implemented. Have a look at the dv-python package.")
         return None
-    elif file_name.endswith('.dat') and '_td' in file_name and file_name_dat_aps == None:
-        parsed_file = loris_extension.read_dat_td(file_name)
     elif file_name.endswith('.dat') and '_aps' in file_name and file_name_dat_aps == None:
         parsed_file = loris_extension.read_dat_aps(file_name)
-    elif file_name.endswith('.dat') and file_name_dat_aps.endswith('.dat'):
+    elif file_name.endswith('.dat') and file_name_dat_aps != None and file_name_dat_aps.endswith('.dat'):
         parsed_file = loris_extension.read_dat_td_aps(file_name, file_name_dat_aps)
+    elif file_name.endswith('.dat') and file_name_dat_aps == None:
+        parsed_file = loris_extension.read_dat_td(file_name)
     elif file_name.endswith('.es'):
         parsed_file = loris_extension.read_event_stream(file_name)
     elif file_name.endswith('.csv'):

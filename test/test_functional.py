@@ -83,3 +83,9 @@ class TestFunctionalAPI(unittest.TestCase):
         events = parsed_file['events']
         self.assertEqual(len(events), 4407)
         self.assertEqual(parsed_file['type'], 'dvs')
+        
+    def test_read_dat_without_td_in_filename(self):
+        parsed_file = loris.read_file(examples_path_dat + 'user01_do_3.dat')
+        events = parsed_file['events']
+        self.assertEqual(len(events), 723759)
+        self.assertEqual(parsed_file['type'], 'dvs')
