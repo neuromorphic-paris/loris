@@ -15,7 +15,7 @@ def read_file(file_name, file_name_dat_aps=None, verbose=False):
         width = None
         height = None
         for stream_id, stream in decoder.id_to_stream().items():
-            if 'type' in stream and stream['type'] == 'events' and (target_id is None or stream_id < target_id):
+            if stream['type'] == 'events' and (target_id is None or stream_id < target_id):
                 target_id = stream_id
         if target_id is None:
             raise Exception('there are no events in the AEDAT file')
