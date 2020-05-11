@@ -5,7 +5,7 @@ import os
 from utils import create_random_input_with_ordering
 
 examples_path_es = 'third_party/command_line_tools/third_party/sepia/third_party/event_stream/examples/'
-examples_path_dat = 'test/example-files/'
+examples_path = 'test/example-files/'
 
 class TestFunctionalAPI(unittest.TestCase):
     def setUp(self):
@@ -79,13 +79,22 @@ class TestFunctionalAPI(unittest.TestCase):
         os.remove(new_file)
 
     def test_read_dat_v2_dvs(self):
-        parsed_file = loris.read_file(examples_path_dat + 'NCARS_obj_004397_td.dat')
+        parsed_file = loris.read_file(examples_path + 'NCARS_obj_004397_td.dat')
         events = parsed_file['events']
         self.assertEqual(len(events), 4407)
         self.assertEqual(parsed_file['type'], 'dvs')
-        
+
     def test_read_dat_without_td_in_filename(self):
-        parsed_file = loris.read_file(examples_path_dat + 'user01_do_3.dat')
+        parsed_file = loris.read_file(examples_path + 'user01_do_3.dat')
         events = parsed_file['events']
         self.assertEqual(len(events), 723759)
         self.assertEqual(parsed_file['type'], 'dvs')
+
+    def test_read_aedat4(self):
+        parsed_file = loris.read_file(examples_path + 'parramatta.aedat4')
+        events = parsed_file['events']
+        self.assertEqual(len(events), 78830)
+        self.assertEqual(parsed_file['type'], 'dvs')
+
+if __name__ == '__main__':
+    unittest.main()
