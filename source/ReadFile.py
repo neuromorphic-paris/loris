@@ -1,3 +1,4 @@
+import aedat
 import loris_extension
 from . import CSV as csv
 import os
@@ -8,9 +9,22 @@ def read_file(file_name, file_name_dat_aps=None, verbose=False):
     """parse a file from a neuromorphic camera and return events
     supported file formats are .aedat, .dat, .es and .csv
     """
-    if file_name.endswith('.aedat'):
-        print("Parsing the aedat file format is not implemented. Have a look at the dv-python package.")
-        return None
+    if file_name.endswith('.aedat4'):
+        decoder = aedat.Decoder(file_name)
+        target_id = None
+        width = None
+        height = None
+        for stream_id, stream in decoder.id_to_stream().items():
+            if 'type' in stream and stream['type'] == 'events' and (target_id is None or stream_id < target_id):
+                target_id = stream_id
+        if target_id is None:
+            raise Exception('there are no events in the AEDAT file')
+        parsed_file = {
+            'type': 'dvs',
+            'width': width,
+            'height': height,
+            'events': np.concatenate(tuple(packet['events'] for packet in decoder if packet['stream_id'] == target_id)),
+        }
     elif file_name.endswith('.dat') and '_aps' in file_name and file_name_dat_aps == None:
         parsed_file = loris_extension.read_dat_aps(file_name)
     elif file_name.endswith('.dat') and file_name_dat_aps != None and file_name_dat_aps.endswith('.dat'):
@@ -23,7 +37,7 @@ def read_file(file_name, file_name_dat_aps=None, verbose=False):
         parsed_file = csv.parse_file(file_name)
     else:
         print("I don't know what kind of format you want to read. "
-              + "Please specify a valid file name ending such as .aedat etc")
+              + "Please specify a valid file name ending such as .aedat4 etc")
         return None
     if parsed_file['type'] == 'dvs':
         parsed_file['events'] = parsed_file['events'].view(dtype=[(('ts', 't'), '<u8'), ('x', '<u2'),

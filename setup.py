@@ -81,7 +81,7 @@ with open('README.md', 'r') as file:
 # setup the package
 setuptools.setup(
     name='loris',
-    version='0.4.2',
+    version='0.5.0',
     url='https://github.com/neuromorphic-paris/loris',
     author='Gregor Lenz, Alexandre Marcireau',
     author_email='gregor.lenz@inserm.fr, alexandre.marcireau@gmail.com',
@@ -90,7 +90,7 @@ setuptools.setup(
     long_description_content_type='text/markdown',
     packages=['loris'],
     setup_requires=['numpy'],
-    install_requires=['numpy', 'tqdm'],
+    install_requires=['aedat', 'numpy', 'tqdm'],
     classifiers=[
         'Programming Language :: Python :: 3',
         'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',

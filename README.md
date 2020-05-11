@@ -6,11 +6,12 @@ read and write different file formats from neuromorphic cameras such as **.dat**
 If you're planning to read **.aedat** files, take a look at [dv-python](https://gitlab.com/inivation/dv-python)
 
 ### Supported formats
-|        | version | read    | write   |
-|--------|--------:|:-------:|:-------:|
-| .dat   | 1/2     | &#9745; | &#9744; |
-| .es    | 2.x     | &#9745; | &#9745; |
-| .csv   | -       | &#9745; | &#9744; |
+|           | version | read    | write   |
+|-----------|--------:|:-------:|:-------:|
+| .dat      | 1/2     | &#9745; | &#9744; |
+| .es       | 2.x     | &#9745; | &#9745; |
+| .csv      | -       | &#9745; | &#9744; |
+| .aedat4   | 4       | &#9745; | &#9744; |
 
 ### Install
 ~~~python
