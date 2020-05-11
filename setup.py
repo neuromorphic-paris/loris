@@ -90,7 +90,7 @@ setuptools.setup(
     long_description_content_type='text/markdown',
     packages=['loris'],
     setup_requires=['numpy'],
-    install_requires=['numpy', 'tqdm'],
+    install_requires=['aedat', 'numpy', 'tqdm'],
     classifiers=[
         'Programming Language :: Python :: 3',
         'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
