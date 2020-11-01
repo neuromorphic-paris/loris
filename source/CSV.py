@@ -23,9 +23,9 @@ def parse_file(file_name):
 
         if event_length == 4:
             print("Assuming classic DVS event (t, x, y, p)")
-            events.append((first_event[0], first_event[1], first_event[2], first_event[3]))
+            events.append((first_event[0], first_event[1], first_event[2], int(first_event[3]==1 or first_event[3]=='True')))
             for row in reader:
-                events.append((row[0], row[1], row[2], row[3]))
+                events.append((row[0], row[1], row[2], int(row[3]==1 or row[3]=='True')))
                 if int(row[1]) > max_x:
                     max_x = int(row[1])
                 if int(row[2]) > max_y:
