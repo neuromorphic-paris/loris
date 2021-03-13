@@ -46,7 +46,6 @@ def read_file(file_name, file_name_dat_aps=None, verbose=False):
         parsed_file['events'] = parsed_file['events'].view(dtype=[(('ts', 't'), '<u8'), ('x', '<u2'),
                                                                   ('y', '<u2'), ('is_threshold_crossing', '?'),
                                                                   (('p', 'polarity'), '?')])
-    parsed_file['events'] = parsed_file['events'].view(type=np.rec.recarray)
     if verbose and file_name_dat_aps == None:
         print("Read " + str(len(parsed_file['events'])) + " events of type " + parsed_file['type'] + " from " + os.path.split(file_name)[-1])
     elif verbose:
