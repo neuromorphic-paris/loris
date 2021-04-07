@@ -90,7 +90,7 @@ else:
     libraries = ['pthread']
 setuptools.setup(
     name='loris',
-    version='0.5.1',
+    version='0.5.2',
     url='https://github.com/neuromorphic-paris/loris',
     author='Gregor Lenz, Alexandre Marcireau',
     author_email='gregor.lenz@inserm.fr, alexandre.marcireau@gmail.com',
