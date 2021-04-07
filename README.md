@@ -38,5 +38,14 @@ loris.write_events_to_file(event_array, "/path/to/my-file.es", ordering)
 loris.write_events_to_file(structured_event_array, "/path/to/my-file.es")
 ~~~
 
+### Windows test (for developers)
+
+To make sure the library works on Windows (if you use macOS or Linux), follow these steps:
+
+1. Download Vagrant (https://www.vagrantup.com/)
+2. `cd windows`
+3. `vagrant up` (this will download a virtual machine and build the package)
+4. `vargrant ssh` (optional, to inspect the Windows VM)
+5. `vagrant destroy -f` (cleanup)
 
 ![loris](loris.gif "The Loris Banner")
