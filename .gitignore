@@ -8,3 +8,4 @@ MANIFEST
 *.so
 **.ipynb_checkpoints/
 test/new_dvs.es
+.vagrant

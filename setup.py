@@ -1,8 +1,8 @@
+import setuptools
 import distutils.command.build
 import distutils.core
 import os
 import re
-import setuptools
 import shutil
 import subprocess
 import sys
@@ -12,7 +12,7 @@ def check_submodules():
     """ verify that the submodules are checked out and clean
         use `git submodule update --init --recursive`; on failure
     """
-    if not os.path.exists('.git'):
+    if os.environ.get('LORIS_SKIP_GIT', None) is not None or not os.path.exists('.git'):
         return
     with open('.gitmodules') as f:
         for l in f:
@@ -79,6 +79,15 @@ with open('README.md', 'r') as file:
     long_description = file.read()
 
 # setup the package
+if sys.platform == 'darwin':
+    extra_args = ['-std=c++11','-stdlib=libc++']
+    libraries = []
+elif sys.platform == 'win32':
+    extra_args = []
+    libraries = []
+else:
+    extra_args = ['-std=c++11']
+    libraries = ['pthread']
 setuptools.setup(
     name='loris',
     version='0.5.1',
@@ -100,10 +109,10 @@ setuptools.setup(
         'loris_extension',
         language='c++',
         sources=[os.path.join(dirname, 'loris', 'loris_extension.cpp')],
-        extra_compile_args=(['-std=c++11'] if sys.platform == 'linux' else ['-std=c++11','-stdlib=libc++']),
-        extra_link_args=(['-std=c++11'] if sys.platform == 'linux' else ['-std=c++11','-stdlib=libc++']),
+        extra_compile_args=extra_args,
+        extra_link_args=extra_args,
         include_dirs=[],
-        libraries=(['pthread'] if sys.platform == 'linux' else [])
+        libraries=libraries
     )],
     cmdclass={'build_ext': build_ext_factory, "sdist": sdist_checked}
 )

@@ -1,0 +1,30 @@
+$install = <<-'SCRIPT'
+function Install-Python($version, $suffix) {
+    Write-Output "installing python $version$suffix"
+    Invoke-WebRequest `
+        -URI "https://www.python.org/ftp/python/$version/python-$version$suffix.exe" `
+        -OutFile "C:\Users\vagrant\python-$version$suffix.exe" `
+        -UseBasicParsing
+    & "C:\Users\vagrant\python-$version$suffix.exe" /quiet `
+        InstallAllUsers=1 `
+        PrependPath=1 `
+        Include_test=0
+}
+Install-Python 3.9.2 ''
+choco install microsoft-visual-cpp-build-tools -y
+Set-ItemProperty HKCU:\Environment Path `
+    "$([System.Environment]::GetEnvironmentVariable("Path", "Machine"));$([System.Environment]::GetEnvironmentVariable("Path", "User"))"
+SCRIPT
+
+$build = <<-'SCRIPT'
+cd C:\io
+$env:LORIS_SKIP_GIT = 'true'
+C:\Program` Files` `(x86`)\Python39-32\python.exe setup.py build
+SCRIPT
+
+Vagrant.configure("2") do |config|
+  config.vm.box = "gusztavvargadr/windows-10"
+  config.vm.synced_folder "../", "C:\\io"
+  config.vm.provision "shell", inline: $install
+  config.vm.provision "shell", inline: $build, run: "always"
+end
