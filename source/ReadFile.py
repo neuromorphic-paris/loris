@@ -1,4 +1,3 @@
-import aedat
 import loris_extension
 from . import CSV as csv
 import os
@@ -10,6 +9,8 @@ def read_file(file_name, file_name_dat_aps=None, verbose=False):
     supported file formats are .aedat, .dat, .es and .csv
     """
     if file_name.endswith('.aedat4'):
+        import aedat
+
         decoder = aedat.Decoder(file_name)
         target_id = None
         width = None
