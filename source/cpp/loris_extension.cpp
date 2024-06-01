@@ -2,6 +2,7 @@
 #include <Python.h>
 #define NPY_NO_DEPRECATED_API NPY_1_7_API_VERSION
 #include <numpy/arrayobject.h>
+#include <numpy/npy_2_compat.h>
 
 /// count determines the number of events in the given stream.
 template <sepia::type event_stream_type>
@@ -238,7 +239,7 @@ PyArrayObject* get_events(PyObject* dict) {
     }
     const auto descriptions = get_descriptions<event_stream_type>();
     const auto offsets = get_offsets<event_stream_type>();
-    auto fields = PyArray_DESCR(events)->fields;
+    auto fields = PyDataType_FIELDS(PyArray_DESCR(events));
     if (!PyMapping_Check(fields)) {
         throw std::runtime_error("'events' must be a structured array");
     }
