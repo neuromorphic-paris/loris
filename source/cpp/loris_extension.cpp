@@ -2,7 +2,7 @@
 #include <Python.h>
 #define NPY_NO_DEPRECATED_API NPY_1_7_API_VERSION
 #include <numpy/arrayobject.h>
-#include <numpy/npy_2_compat.h>
+#include "npy_2_compat.h"
 
 /// count determines the number of events in the given stream.
 template <sepia::type event_stream_type>
