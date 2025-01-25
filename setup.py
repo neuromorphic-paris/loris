@@ -8,6 +8,12 @@ import subprocess
 import sys
 dirname = os.path.dirname(os.path.realpath(__file__))
 
+def set_builtin(name, value):
+    if isinstance(__builtins__, dict):
+        __builtins__[name] = value
+    else:
+        setattr(__builtins__, name, value)
+
 def check_submodules():
     """ verify that the submodules are checked out and clean
         use `git submodule update --init --recursive`; on failure
@@ -71,7 +77,7 @@ def build_ext_factory(parameters):
     class build_ext(setuptools.command.build_ext.build_ext):
         def finalize_options(self):
             setuptools.command.build_ext.build_ext.finalize_options(self)
-            __builtins__.__NUMPY_SETUP__ = False
+            set_builtin('__NUMPY_SETUP__', False)
             import numpy
             self.include_dirs.append(numpy.get_include())
     return build_ext(parameters)
